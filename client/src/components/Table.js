@@ -23,6 +23,7 @@ export function Table({}) {
 
   return (
     <div className="w-full px-4">
+        
         <table
         style={{
             borderCollapse: "collapse",
