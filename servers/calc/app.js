@@ -26,30 +26,30 @@ mongoose.connect(DB , {
 });
 
 // const Question = require('./schema');
-const numberOfUsers = require('./numberOfusers');
+// const numberOfUsers = require('./numberOfusers');
 
 // (async function() {
 //  await Question.deleteMany({});
-// await Question.create({
-// id: 1,
-// q1: [],
-// q2: [],
-// q3: [],
-// q4: [],
-// q5: [],
-// q6: [],
-// q7: [],
-// q8: [],
-// q9: [],
-// q10: []
-// });
-
-// await numberOfUsers.deleteMany({});
-// await numberOfUsers.create({
+//     await Question.create({
 //     id: 1,
-//     numberOfUsers: 0
+//     q1: [],
+//     q2: [],
+//     q3: [],
+//     q4: [],
+//     q5: [],
+//     q6: [],
+//     q7: [],
+//     q8: [],
+//     q9: [],
+//     q10: []
+//     });
+
+//     await numberOfUsers.deleteMany({});
+//     await numberOfUsers.create({
+//         id: 1,
+//         numberOfUsers: 0
 // });
-//   }());
+// }());
 
 app.get('/', (req, res) => {
     res.send('Hello World!');

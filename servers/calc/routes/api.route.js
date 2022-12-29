@@ -82,12 +82,12 @@ router.get('/collect', async (req, res) => {
         const means = [];
 
         for (let i = 0; i < frequencies.length; i++) {
-            const mean = calculateMean(frequencies[i]);
+            const mean = calculateMean(frequencies[i],users.numberOfUsers);
             means.push(mean);
         }
 
 
-        return res.status(200).json({ message: 'success', frequencyTable: frequencies, mode: modes,mean: means });
+        return res.status(200).json({ frequencyTable: frequencies, mode: modes,mean: means });
 
     } catch (error) {
         return res.status(500).json({ message: error.message });
@@ -146,7 +146,7 @@ const calculateMean = (arr,total) => {
         mean += arr[i] * (i + 1);
     }
 
-    return mean;
+    return mean/total;
 
 
 }

@@ -34,8 +34,7 @@ function App() {
         <Route path="/" element={
             <div>
                 <Header />
-                {/* <Pi1 data={data} options={options}/> */}
-                
+            
                 <Table  />
                 <Footer  />
             </div>
