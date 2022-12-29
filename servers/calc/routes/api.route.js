@@ -1,11 +1,15 @@
 const router = require('express').Router();
 const Question = require('../schema');
+const numberOfUsers = require('../numberOfusers');
 const axios = require('axios');
+
+
 
 router.get('/collect', async (req, res) => {
     // in this endpoint i want to all the data from s1, s2, s3, s4, s5 from /api/send endpoint then append each answer to my database
 
     try {
+
         const servers = ['http://localhost:3001', 'http://localhost:3002', 'http://localhost:3003', 'http://localhost:3004', 'http://localhost:3005'];
 
         const promises = servers.map(server => axios.get(`${server}/api/send`));
@@ -63,16 +67,49 @@ router.get('/collect', async (req, res) => {
             frequencies.push(frequency);
         }
 
+        const modes = [];
+        
+        for (let i = 0; i < frequencies.length; i++) {
+            const mode = calculateMode(frequencies[i]);
+            modes.push(mode);
+        }
 
 
 
-        return res.status(200).json({ message: 'success', data: frequencies });
+
+        const users = await numberOfUsers.findOne({id: 1});
+
+        const means = [];
+
+        for (let i = 0; i < frequencies.length; i++) {
+            const mean = calculateMean(frequencies[i]);
+            means.push(mean);
+        }
+
+
+        return res.status(200).json({ message: 'success', frequencyTable: frequencies, mode: modes,mean: means });
 
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
 
 
+});
+
+// route that every time is hit returns increment the number of users
+router.get('/numberOfUsers', async (req, res) => {
+    try {
+        const user = await numberOfUsers.findOne({id: 1});
+
+        user.numberOfUsers += 1;
+
+        await user.save();
+
+        return res.status(200).json({ message: 'success' });
+
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
 });
 
 
@@ -94,5 +131,26 @@ const calculateFrequency = (arr) => {
     return frequencyArr
 
 }
+
+const calculateMode = (arr) => {
+    const max = Math.max(...arr);
+    const mode = arr.indexOf(max) + 1;
+    return mode;    
+}
+
+// calculate the mean from the frequency table
+const calculateMean = (arr,total) => {
+    let mean = 0
+
+    for (let i = 0; i < arr.length; i++) {
+        mean += arr[i] * (i + 1);
+    }
+
+    return mean;
+
+
+}
+
+
 
 module.exports = router;

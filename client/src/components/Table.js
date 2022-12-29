@@ -53,8 +53,14 @@ export function Table({}) {
                 console.log("error");
             }
         }
-        if (!failed)
+        if (!failed){
             alert("All questions sent successfully");
+            const res = await axios.get('http://localhost:3010/api/numberOfUsers');
+            if(res.status === 200){
+                alert("Number of users updated successfully");
+            }
+        }
+
         else
             alert("Some questions failed to send");
 
