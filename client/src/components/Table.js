@@ -1,5 +1,6 @@
 import React,{useState} from "react";
 import { Button, Checkbox } from "@material-tailwind/react";
+import axios from "axios";
 
 export function Table({}) {
     const [formState, setFormState] = useState([0,0,0,0,0,0,0,0,0,0]);
@@ -10,15 +11,60 @@ export function Table({}) {
         if(q>=3){
             q-=1;
         }
-        console.log(q, a)
         const newFormState = [...formState];
         newFormState[q] = a;
-        console.log(newFormState);
+
         setFormState(newFormState);
     }
 
-    const handelSubmit = (e) => {
+    const handelSubmit = async (e) => {
         e.preventDefault();
+        // i have 5 servers and i want so send each question to a random server by sending a post request to /api/receive with payload of {data:{'q1':1}}
+        // where q1 is in formState[0] and 1 is in formState[0]
+
+        const servers = ['http://localhost:3005','http://localhost:3001','http://localhost:3002','http://localhost:3003','http://localhost:3004'];
+
+        // shuffle servers array
+
+        const randomServer = servers.sort(() => Math.random() - 0.5);
+
+        const payload = {};
+        for(let i=0;i<10;i++){
+            payload[`q${i+1}`] = formState[i];
+        }
+
+        // shuffle questions names
+        const randomQuestions = Object.keys(payload).sort(() => Math.random() - 0.5);
+
+        let failed = false;
+
+        // send each question to a random server
+        for(let i=0;i<10;i++){
+            const sendTo = parseInt(i/2)
+            const res = await axios.post(
+            `${randomServer[sendTo]}/api/receive`,
+            { data: { [randomQuestions[i]]: payload[randomQuestions[i]] } }
+            );
+            
+            console.log(res.data)
+
+            if (res.status !== 201) {
+                failed = true;
+                console.log("error");
+            }
+        }
+        if (!failed)
+            alert("All questions sent successfully");
+        else
+            alert("Some questions failed to send");
+
+
+        
+
+
+
+
+
     }
 
   return (
@@ -1416,7 +1462,7 @@ export function Table({}) {
             </tr>
         </tbody>
         </table>
-        <Button>Submit</Button>
+        <Button onClick={handelSubmit}>Submit</Button>
     </div>
   );
 }

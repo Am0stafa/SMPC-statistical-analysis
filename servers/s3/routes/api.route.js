@@ -75,11 +75,14 @@ router.post('/receive', async (req, res) => {
 router.get('/send', async (req, res, next) => {
     try {
         const question = await Question.findOne({ id: 1 });
+
+
         res.status(200).send(question);
     } catch (err) {
         return res.status(400).send({ message: err.message });
     }
 });
+
 
 module.exports = router;
 

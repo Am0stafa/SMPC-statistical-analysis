@@ -2,6 +2,7 @@ const express = require('express');
 const createError = require('http-errors');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const cors = require('cors');
 require('dotenv').config();
 
 
@@ -9,6 +10,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));
+app.use(cors());
+
 const DB= process.env.mongo
 
 mongoose.connect(DB , {
@@ -22,6 +25,24 @@ mongoose.connect(DB , {
     process.exit(1)
   })
 });
+
+// const Question = require('./schema');
+// (async function() {
+//  await Question.deleteMany({});
+// await Question.create({
+// id: 1,
+// q1: [],
+// q2: [],
+// q3: [],
+// q4: [],
+// q5: [],
+// q6: [],
+// q7: [],
+// q8: [],
+// q9: [],
+// q10: []
+// });
+//   }());
 
 app.get('/', (req, res) => {
     res.send('Hello World!');

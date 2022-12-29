@@ -5,21 +5,6 @@ const Question = require('../schema');
 router.post('/receive', async (req, res) => {
     try {
 
-        // await Question.create({
-        //     id: 1,
-        //     q1: [],
-        //     q2: [],
-        //     q3: [],
-        //     q4: [],
-        //     q5: [],
-        //     q6: [],
-        //     q7: [],
-        //     q8: [],
-        //     q9: [],
-        //     q10: []
-        // });
-
-
         const answers = req.body.data; // answers will look like this {q1:0} or {q1:1} or {q1:2} or {q1:3}
 
         const question = await Question.findOne({ id: 1 });
@@ -75,6 +60,7 @@ router.post('/receive', async (req, res) => {
 router.get('/send', async (req, res, next) => {
     try {
         const question = await Question.findOne({ id: 1 });
+
         res.status(200).send(question);
     } catch (err) {
         return res.status(400).send({ message: err.message });
