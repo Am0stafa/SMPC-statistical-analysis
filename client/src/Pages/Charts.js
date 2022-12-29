@@ -1,5 +1,7 @@
 import React,{useEffect,useState} from 'react'
 import axios from 'axios'
+import stringify from "json-stringify-pretty-compact";
+
 const Charts = () => {
 
     const [data, setData] = useState({})
@@ -20,7 +22,7 @@ const Charts = () => {
 
   return (
     <div>   
-        {JSON.stringify(data)}
+        <pre>{stringify(data)}</pre>
     </div>
   )
 }
