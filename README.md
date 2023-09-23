@@ -118,3 +118,6 @@ When should you use JIFF vs. MPyC for secure multi-party computation?
 - For Python integration, definitely consider MPyC
 - Evaluate both against your specific needs
 
+# Research 
+after looking for limitations mentioned in studies and think about how your own work might address these. I came out with 3 implementations
+
