@@ -129,6 +129,32 @@ after looking for limitations mentioned in studies and think about how your own 
  - The system only considers binary yes/no votes. Allowing nuanced ratings could provide more useful feedback.
 
 
+# Privacy-Preserving Survey Statistics Research
 
+This project implements secure multi-party computation techniques to enable statistical analysis of survey response data while preserving privacy. 
 
+## Overview
 
+The project contains 3 software tools for:
+
+- Conducting surveys/questionnaires and collecting response data
+- Calculating core statistics on the data including:
+  - Mean 
+  - Mode
+  - Frequency tables
+
+The statistics are computed using cryptographic techniques so that individual responses remain private.
+
+## Implementations
+
+Three SMPC techniques are implemented:
+
+- Secret sharing using a shuffle server model
+- MPyC
+- Jiff 
+
+Each enables computing the statistical measures on the joint data from multiple parties without revealing individual party data.
+
+## Getting Started
+
+The code is structured as follows:
