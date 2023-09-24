@@ -120,4 +120,15 @@ When should you use JIFF vs. MPyC for secure multi-party computation?
 
 # Research 
 after looking for limitations mentioned in studies and think about how your own work might address these. I came out with 3 implementations
+## Limitations found and where tried to improve
+ - Limited analysis functions - Only simple statistics like sorting and filtering are demonstrated. More complex analytic workflows are not implemented or tested.
+ - No independent security audit - There is no third-party security analysis of the implementation. The security claims rely on the system designers' own analysis.
+ - The prototype implementation uses a simple client that reads questionnaire data from a CSV file rather than a full client application. Evaluating performance with a real client app would be needed.
+ - Deployment was tested only on a local network. Performance when data miners are geographically distributed is not evaluated.
+ - There is no empirical evaluation of the system's performance. Metrics like computation time, communication overhead, and scalability should be benchmarked.
+ - The system only considers binary yes/no votes. Allowing nuanced ratings could provide more useful feedback.
+
+
+
+
 
