@@ -1,9 +1,10 @@
-# multi-party-computation-for-statistical-analysis
- performing privacy-preserving statistical analyses in a secure multiparty setting concentrating on cryptographic privacy
+# Secure Multi-Party Computation (SMPC) for Privacy-Preserving Survey Analysis
+Welcome to this advanced suite of statistical tools using Secure Multi-Party Computation (SMPC). Tailored for the PANAS & BFI-10 questionnaires, this repository features three unique implementations—Secret Sharing, MPyC, and Jiff—to ensure data privacy and integrity while analyzing survey results.
 
 # What is Secure Multi-Party Computation (SMPC)?
 It is a subfield within cryptography that deals with allowing parties to compute a function over their inputs, ensuring that each participant doesn't reveal any more about their input than can be inferred from the output. In other words, parties can jointly compute a function without revealing their individual inputs to each other.
 
+Computation Overhead: Secure computations can be computationally expensive. Depending on the number of parties, size of the data, and complexity of operations, this can introduce significant latency.
 
 # Overview
 
@@ -16,6 +17,7 @@ It is a subfield within cryptography that deals with allowing parties to compute
    - Secure voting systems
    - Auctions without trusted third parties
    - Privacy-preserving medical and financial data processing
+   - Privacy-preserving data analysis: Multiple organizations might want to perform joint analytics without exposing their individual datasets.
 
 3. **Protocols:** Different protocols achieve SMPC:
    - **Secret Sharing:** Inputs are divided into secret shares and computations are done on these shares.
@@ -119,19 +121,21 @@ When should you use JIFF vs. MPyC for secure multi-party computation?
 - Evaluate both against your specific needs
 
 # Research 
-after looking for limitations mentioned in studies and think about how your own work might address these. I came out with 3 implementations
+After looking for limitations in previous researches. I came out with 3 implementations. This project implements secure multi-party computation techniques to enable statistical analysis of survey response data while preserving privacy.
+
+### Importance of the Research
+
+In today's data-driven world, ensuring the privacy of individual's data while drawing meaningful insights from aggregated datasets is paramount. My solution bridges the gap between data privacy and efficient statistical analysis. With the increasing need to conduct surveys and gather feedback while ensuring data confidentiality, the SMPC tools stand as a beacon, demonstrating the possibility of achieving the best of both worlds.
+
 ## Limitations found and where tried to improve
- - Limited analysis functions - Only simple statistics like sorting and filtering are demonstrated. More complex analytic workflows are not implemented or tested.
- - No independent security audit - There is no third-party security analysis of the implementation. The security claims rely on the system designers' own analysis.
+ - Limited analysis functions 
+    - Only simple statistics like sorting and filtering are demonstrated. More complex analytic workflows are not implemented or tested.
+ - No independent security audit 
+    - There is no third-party security analysis of the implementation. The security claims rely on the system designers' own analysis.
  - The prototype implementation uses a simple client that reads questionnaire data from a CSV file rather than a full client application. Evaluating performance with a real client app would be needed.
  - Deployment was tested only on a local network. Performance when data miners are geographically distributed is not evaluated.
  - There is no empirical evaluation of the system's performance. Metrics like computation time, communication overhead, and scalability should be benchmarked.
  - The system only considers binary yes/no votes. Allowing nuanced ratings could provide more useful feedback.
-
-
-# Privacy-Preserving Survey Statistics Research
-
-This project implements secure multi-party computation techniques to enable statistical analysis of survey response data while preserving privacy. 
 
 ## Overview
 
@@ -155,6 +159,53 @@ Three SMPC techniques are implemented:
 
 Each enables computing the statistical measures on the joint data from multiple parties without revealing individual party data.
 
-## Getting Started
+## Other approaches considered and any may be another point for further research:
+- Encrypted Databases:
+    - Transparent Data Encryption (TDE): Some databases offer this feature where data is encrypted automatically before being written to disk and decrypted when read.
+    - Application-layer Encryption: Here, data is encrypted in the application before it's sent to the database. The application retains the encryption keys, and the database only sees (and stores) encrypted data.
+- Distributed Databases: Systems like Apache Cassandra, CockroachDB, or Amazon DynamoDB can distribute data across multiple nodes or clusters, which not only offers scalability but also ensures redundancy.
+- Immutable Data Storage: Systems like blockchain or distributed ledger technology ensure that once data is written, it cannot be changed. This offers an additional layer of security and accountability, ensuring that shared data in the SMPC setup remains unchanged.
+- Decentralized File Storage:by using any 3rd part solution
 
-The code is structured as follows:
+
+
+## The Solutions
+
+#### Secret Sharing
+
+The essence of Secret Sharing is to divide data into multiple parts, sending each part to a different server. Data remains confidential as no single server has access to the full data. Aggregated statistics can then be derived without exposing individual responses. So i had implemented my own Secret Sharing algorithm using additional security measures to ensure data privacy, such as shuffling the data before sharing it.
+
+<!-- ![Secret Sharing Diagram](path) -->
+[![image](https://www.linkpicture.com/q/IMG_1389.jpg)](https://www.linkpicture.com/view.php?img=LPic6510c410915592079277193)
+
+#### MPyC
+
+It allows for multiple parties to input answers to a set of questions securely and privately, and then calculates the mean and mode of the answers.
+
+Requirements: -Python 3.7 or above -MPyC (pip install mpyc) -collections (pip install collections)
+
+#### Jiff
+
+### How does the JIFF solution fit into our context?
+
+1. Users submit answers confidentially. Their answers are split into shares and distributed.
+
+2. The central server, without knowing any individual's responses, helps facilitate the distributed computation, such as calculating the mean, mode, and frequencies of the answers.
+
+3. The final statistics (mean, mode, frequency table) are computed without any single entity knowing the individual inputs. Only the aggregate statistics are revealed.
+
+Requirements: -node.js , -npm i jiff  and -mongodb
+
+## Performance Evaluation
+
+To assess the performance of my solutions, i meticulously examined the **computation time**, **scalability**, and **overhead** of each implementation. Benchmarks were executed on both PANAS and BFI-10 questionnaires.
+
+#### How Performance was Evaluated:
+
+1. **Computation Time:** Measured the time taken to compute the statistical analyses.
+2. **Scalability:** Assessed how each solution responded to an increase in the volume of survey data.
+3. **Overhead:** Evaluated the additional computational costs associated with ensuring privacy-preserving analysis.
+
+## Screenshots
+
+Screenshots showcasing performance metrics and key features will be added shortly.
